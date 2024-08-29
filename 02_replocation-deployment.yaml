@@ -1,0 +1,83 @@
+# using ReplicationController
+
+# apiVersion: v1
+# kind: ReplicationController
+# metadata: 
+#   name: my-pod
+# spec: 
+#   replicas: 3
+#   selector:
+#     app: my-pod
+#   template:
+#     metadata:
+#       labels:
+#         app: my-pod
+#     spec:
+#       containers:
+#         - name: my-pod
+#           image: nginx
+
+
+
+# using Replica set
+
+# apiVersion: apps/v1
+# kind: ReplicaSet
+# metadata:
+#   name: my-pod
+# spec:
+#   replicas: 3
+#   selector:
+#     matchLabels:
+#       app: my-pod
+#   template:
+#     metadata:
+#       labels:
+#         app: my-pod
+#     spec:
+#       containers:
+#         - name: my-pod
+#           image: nginx
+
+
+    # we can also specify the ports of the container
+
+
+
+
+# Deployments
+# Purpose:
+
+# Manages ReplicaSets and provides declarative updates for Pods.
+# Supports rolling updates and rollbacks.
+# Simplifies the management of application versions and updates.
+
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: my-pod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-pod
+  template:
+    metadata:
+      labels:
+        app: my-pod
+    spec:
+      containers:
+        - name: my-pod
+          image: nginx
+
+
+
+# // if wnats to do rtoling updaes we just needs to udpate the spec.replicas and inmage of the container it will automatically update
+
+
+# Rollback the Deployment
+# kubectl rollout undo deployment my-pod
+
+
+# Scale the Deployment
+# kubectl scale deployment my-pod --replicas=5

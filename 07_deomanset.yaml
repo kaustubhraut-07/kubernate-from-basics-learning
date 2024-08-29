@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: logging-agent
+spec:
+  selector:
+    matchLabels:
+      name: logging-agent
+  template:
+    metadata:
+      labels:
+        name: logging-agent
+    spec:
+      containers:
+      - name: logging-agent
+        image: busybox
+        command: ["sh", "-c", "while true; do echo $(date) >> /var/log/agent.log; sleep 5; done"]
+        volumeMounts:
+        - name: log-volume
+          mountPath: /var/log
+      volumes:
+      - name: log-volume
+        emptyDir: {}

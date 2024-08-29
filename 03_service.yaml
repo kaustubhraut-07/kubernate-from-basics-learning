@@ -1,0 +1,68 @@
+# Services helps to expose the applciation to the outside world
+# Services provide a stable network endpoint for a set of Pods.
+# They abstract the dynamic nature of Pods, allowing you to access your applications without worrying about the individual Pod IP addresses.
+
+# Types of Services
+# ClusterIP (Default):
+
+# Exposes the Service on an internal IP in the cluster.
+# Only accessible within the cluster.
+# Useful for internal communication between services.
+# NodePort:
+
+# Exposes the Service on a static port on each node's IP.
+# Accessible from outside the cluster using the node's IP and the static port.
+# Useful for development and testing.
+# LoadBalancer:
+
+# Exposes the Service externally using a cloud provider's load balancer.
+# Automatically provisions an external load balancer.
+# Useful for production environments where you need to expose the Service to the internet.
+
+
+# Create a ClusterIP Service
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: my-service
+# spec:
+#   type: ClusterIP
+#   selector:
+#     app: my-pod
+#   ports:
+#     - protocol: TCP
+#       port: 80
+#       targetPort: 80
+
+
+# Creating service using nodeport
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: my-service-nodeport
+# spec:
+#   type: NodePort
+#   selector:
+#     app: my-pod
+#   ports:
+#     - protocol: TCP
+#       port: 80
+#       targetPort: 80
+
+
+# Creating serice using load balancer
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service-loadbalancer
+spec:
+  type: LoadBalancer
+  selector:
+    app: my-pod
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

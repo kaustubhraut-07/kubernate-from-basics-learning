@@ -1,0 +1,51 @@
+# # Namespaces in kubernates
+# Namespaces provide a way to divide cluster resources between multiple users or teams.
+# They allow you to have the same resource names in different namespaces without conflict.
+# Namespaces can be used to apply resource quotas and policies.
+
+# Isolation: Namespaces provide a logical separation of resources, which is useful for multi-tenant clusters.
+# Resource Management: You can apply resource quotas and limits to namespaces to control resource usage.
+# Policy Enforcement: Namespaces can be used to apply policies such as network policies, pod security policies, and more.
+
+# basic name space using decelarative syntax
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: my-namespace
+
+  
+# Creating Deployment in the my-namespace namespace
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: my-namespace
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  namespace: my-namespace
+spec:
+  selector:
+    app: nginx
+  ports:
+  - port: 80
+    targetPort: 80
+

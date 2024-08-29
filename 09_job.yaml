@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: example-cron-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: example-cron-job
+        image: busybox
+        command: ["sh", "-c", "mkdir -p /var/log && echo $(date) >> /var/log/job.log"]
+      restartPolicy: OnFailure
+  backoffLimit: 4
